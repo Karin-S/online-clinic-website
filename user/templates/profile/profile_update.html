@@ -1,0 +1,29 @@
+{% extends "personal/base.html" %}
+{% load staticfiles%}
+{% load i18n %}
+{% load account socialaccount %}
+{% block content %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'personal/css/profile.css' %}" type = "text/css"/>
+{% endblock %}
+
+
+<div class="inner-p">
+    {% if user.is_authenticated %}
+
+    <center>
+        <form method="post" class="profile">{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Update">
+        </form>
+        <br>
+        <a href="{% url 'user:profiledetail' user.id %}">I changed my mind, go back.</a>
+    </center>
+    {% else %}
+    <center>
+        <p>Sorry, You do not have rights to do that.</p>
+    </center>
+    {% endif %}
+</div>
+{% endblock %}

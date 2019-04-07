@@ -1,0 +1,95 @@
+{% extends "personal/base.html" %}
+{% load staticfiles%}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'personal/css/app.css' %}" type = "text/css"/>
+{% endblock %}
+
+{% block content %}
+
+<div class="inner-a">
+  {% if user.is_authenticated %}
+  <center>
+    {% if request.user.profile_user.types == "Patient" %}
+      <h3>These functions are not designed for the Doctor type user, you can try</h3>
+      <a href="{% url 'appointment:Doctor_ListView' %}">Go back</a>
+        {% else %}
+    <h3>Please select the pending appointment from the following list</h3>
+
+    <div class="pending">
+      <div class="head">
+        <h4>Pending appointment:</h4>
+      </div>
+      <div class="content">
+        {% for instance in object_list %}
+        {% if instance.doctor.id == user.id and instance.status == 'pending' %}
+        <div class="item">
+          <p><a href="{% url 'appointment:handle_appointment_detail' instance.id %}">{{ instance.patient.get_username }} applied an appointment to you at {{ instance.apply_date }}</a></p>
+
+          <p>Applied on: {{instance.apply_date}}</p>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="accepted">
+      <div class="head">
+        <h4>Accepted Appointment:</h4>
+      </div>
+      <div class="content">
+        {% for instance in object_list %}
+        {% if instance.doctor.id == user.id and instance.status == 'accepted' %}
+        <div class="item">
+          <p><a href="{% url 'appointment:handle_appointment_detail' instance.id %}">{{ instance.patient.get_username }} applied an appointment to you at {{ instance.apply_date }}</a></p>
+          <p>Applied on: {{instance.apply_date}}</p>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="completed">
+      <div class="head">
+        <h4>Completed appointment:</h4>
+      </div>
+      <div class="content">
+        {% for instance in object_list %}
+        {% if instance.doctor.id == user.id and instance.status == 'completed' %}
+        <div class="item">
+          <p><a href="{% url 'appointment:handle_appointment_detail' instance.id %}">{{ instance.patient.get_username }} applied an appointment to you at {{ instance.apply_date }}</a></p>
+          <p>Applied on: {{instance.apply_date}}</p>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="completed">
+      <div class="head">
+        <h4>Denied appointment:</h4>
+      </div>
+      <div class="content">
+        {% for instance in object_list %}
+        {% if instance.doctor.id == user.id and instance.status == 'denied' %}
+        <div class="item">
+          <p><a href="{% url 'appointment:handle_appointment_detail' instance.id %}">{{ instance.patient.get_username }} applied an appointment to you at {{ instance.apply_date }}</a></p>
+          <p>Applied on: {{instance.apply_date}}</p>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+  </center>
+</div>
+{% else %}
+<center>
+<p>Sorry, You need to login first.</p>
+<p>Already have an account? Then please <a href="/accounts/login">Login</a>.</p>
+<p>Do not have an account yet? Then please <a href="/accounts/signup">Sign up</a>.</p>
+</center>
+{% endif %}
+{% endblock %}

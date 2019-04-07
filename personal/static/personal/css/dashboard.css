@@ -1,0 +1,34 @@
+.inner-d {
+  display: flex;
+  justify-content: space-around;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 100px;
+}
+
+
+.inner-d .item {
+  width: 170px;
+  min-height: 220px;
+}
+
+.inner-d .item img {
+  width: 100%;
+  height: 170px;
+}
+
+.inner-d .item a {
+  display: block;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  color: #a1a4a9;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all .25s ease;
+}
+
+.inner-d .item a:hover {
+  color: #f36557;
+}

@@ -1,0 +1,37 @@
+{% extends "personal/base.html" %}
+{% load staticfiles%}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'personal/css/app.css' %}" type = "text/css"/>
+{% endblock %}
+
+
+{% block content %}
+{% if user.is_authenticated %}
+<center>
+  {% if request.user.profile_user.types == "Doctor" %}
+    <h3>These functions are not designed for the Doctor type user, you can try</h3>
+    <a href="{% url 'appointment:handle_appointment' %}">Check pending appointment</a>
+      {% else %}
+  <h3>Please select the doctor from the following list if you want to apply an appointment:</h3>
+  <p><a href="{% url 'appointment:Appointment_ListView' %}">Click here to see your appointment history</a><p>
+  <br>
+  {% for instance in object_list %}
+  {% if instance.profile_user.types == "Doctor" %}
+    <div class="item">
+      <p>User id: {{ instance.id }} - <a href="{% url 'appointment:Doctor_DetailView' instance.id %}">{{instance.username}}</a> - {{ instance.profile_user.likes.count }}</p>
+    </div>
+  {% endif %}
+  {% endfor %}
+    {% endif %}
+</center>
+{% else %}
+<center>
+<p>Sorry, You need to login first.</p>
+<p>Already have an account? Then please <a href="/accounts/login">Login</a>.</p>
+<p>Do not have an account yet? Then please <a href="/accounts/signup">Sign up</a>.</p>
+</center>
+{% endif %}
+{% endblock %}

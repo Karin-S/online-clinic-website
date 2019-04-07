@@ -1,0 +1,8 @@
+.evenly {
+  display:flex;
+  justify-content:space-between;
+}
+.evenly div {
+  white-space:nowrap;
+  background:white;
+}

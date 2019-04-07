@@ -1,0 +1,39 @@
+{% extends "personal/base.html" %}
+{% load staticfiles%}
+{% load i18n %}
+{% load account socialaccount %}
+{% block content %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'personal/css/profile.css' %}" type = "text/css"/>
+{% endblock %}
+
+
+<div class="inner-p">
+
+  {% if user.is_authenticated %}
+  <div class="profile">
+
+    <div class="head">
+      Profile for user
+    </div>
+
+    <h2>{{ object.username }}</h2>
+    <p>Firstname: {{ object.first_name }}</p>
+    <p>Lastname: {{ object.last_name }}</p>
+    <p>Email address: {{ object.email }}</p>
+    <p>Gender: {{ request.user.profile_user.gender }}</p>
+    <p>Account Type: {{ request.user.profile_user.types }}</p>
+    <a href="{% url 'user:profileupdate' object.id %}">I wish to change the profile</a>
+
+  </div>
+
+
+  {% else %}
+  <center>
+    <p>Sorry, You do not have rights to do that.</p>
+  </center>
+  {% endif %}
+  {% endblock %}
+</div>
+

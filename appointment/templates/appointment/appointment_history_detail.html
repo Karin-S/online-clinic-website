@@ -1,0 +1,40 @@
+{% extends "personal/base.html" %}
+{% load staticfiles%}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'personal/css/app.css' %}" type = "text/css"/>
+{% endblock %}
+
+{% block content %}
+<div class="info">
+  {% if user.is_authenticated %}
+  <center>
+    {% if object.patient.username == user.get_username %}
+    <h3>Appointment ID: {{ object.id }}</h3>
+    <p>Doctor name: <a href="{% url 'appointment:Doctor_DetailView' object.doctor.id %}">{{ object.doctor.get_username }}</a>(Click to see the Doctor profile)</p>
+    <p>Patient name(You): {{ object.patient.get_username }}</p>
+    <p>Date when applied: {{ object.apply_date }}</p>
+    <p>Symptom: {{ object.symptom }}</p>
+    <p>Preferred Time: {{ object.preferred_time }}</p>
+    <p>Current status: {{ object.status }} </p>
+    {% if object.status == "completed" %}
+      {% endif %}
+    <br>
+    <br>
+    <a href="{% url 'appointment:Appointment_ListView' %}">Go back</a>
+    {% else %}
+    <h3>You are not allowed to see other patients' appointment!</h3>
+    {% endif %}
+
+  </center>
+</div>
+{% else %}
+<center>
+<p>Sorry, You need to login first.</p>
+<p>Already have an account? Then please <a href="/accounts/login">Login</a>.</p>
+<p>Do not have an account yet? Then please <a href="/accounts/signup">Sign up</a>.</p>
+</center>
+{% endif %}
+{% endblock %}

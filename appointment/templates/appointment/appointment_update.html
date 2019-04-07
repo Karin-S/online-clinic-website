@@ -1,0 +1,36 @@
+{% extends "personal/base.html" %}
+{% load staticfiles%}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'personal/css/app.css' %}" type = "text/css"/>
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<div class="info">
+  <center>
+    <form method="post">{% csrf_token %}
+      <p>Status:
+        <select name="status">
+           <option value="accepted">Accepted</option>
+           <option value="denied">Denied</option>
+           <option value="pending" selected>Pending</option>
+           <option value="completed" >Completed</option>
+         </select>
+      </p>
+      <input type="submit" value="Update">
+  </form>
+  <br>
+  <a href="{% url 'appointment:handle_appointment'  %}">I changed my mind, go back.</a>
+  </center>
+
+</div>
+{% else %}
+<center>
+<p>Sorry, You do not have rights to do that.</p>
+</center>
+{% endif %}
+{% endblock %}

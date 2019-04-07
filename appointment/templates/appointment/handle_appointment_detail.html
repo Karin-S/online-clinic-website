@@ -1,0 +1,42 @@
+{% extends "personal/base.html" %}
+{% load staticfiles%}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'personal/css/app.css' %}" type = "text/css"/>
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="info">
+  <center>
+    <h3>Patient name: {{ object.patient.username }}</h3>
+    <p>Patient Firstname: {{ object.patient.first_name }}</p>
+    <p>Patient Lastname: {{ object.patient.last_name }}</p>
+    <p>Apply Date: {{ object.apply_date }}</p>
+    <p>Syptoms: {{ object.symptom }}</p>
+    <p>Preferred Time: {{ object.preferred_time }}</p>
+    <p>Current Status: {{ object.status }} </p>
+    <br>
+    {% if object.status == "completed" %}
+    <a href="{% url 'appointment:handle_appointment' %}">Go back</a>
+    {% else %}
+      <a href="{% url 'appointment:appointment_update' object.id %}">I wish to update the appointment</a>
+    <br>
+    <a href="{% url 'appointment:handle_appointment' %}">Go back</a>
+  </center>
+  {% endif %}
+</div>
+{% else %}
+<center>
+<p>Sorry, You do not have rights to do that.</p>
+</center>
+{% endif %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

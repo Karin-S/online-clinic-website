@@ -1,0 +1,46 @@
+{% extends "personal/base.html" %}
+{% load staticfiles%}
+{% load i18n %}
+{% load account socialaccount %}
+
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'personal/css/dashboard.css' %}" type = "text/css"/>
+{% endblock %}
+
+
+{% block content %}
+<div class="inner-d">
+
+  {% if user.is_authenticated %}
+
+  <div class="item">
+    <img src="{% static 'personal/img/profile2.png' %}" alt="">
+    <a href="{% url 'user:profiledetail' user.id %}">My Profile</a>
+  </div>
+
+  <div class="item">
+    <img src="{% static 'personal/img/forum.png' %}" alt="">
+    <a href="/forum">Forum</a>
+  </div>
+
+  <div class="item">
+    <img src="{% static 'personal/img/appointment.png' %}" alt="">
+    <a href="/appointment">My Appointment</a>
+  </div>
+
+  <div class="item">
+    <img src="{% static 'personal/img/logout.png' %}" alt="">
+    <a href="/accounts/logout">Logout</a>
+  </div>
+
+  {% else %}
+  <center>
+    <p>Sorry, You need to login first.</p>
+    <p>Already have an account? Then please <a href="/accounts/login">Login</a>.</p>
+    <p>Do not have an account yet? Then please <a href="/accounts/signup">Sign up</a>.</p>
+  </center>
+  {% endif %}
+
+</div>
+{% endblock %}

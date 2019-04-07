@@ -1,0 +1,27 @@
+{% extends "personal/base.html" %}
+{% load staticfiles %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'personal/css/home.css' %}" type = "text/css"/>
+{% endblock %}
+{% block content %}
+<div class="banner" style="background-image: url({% static 'personal/img/header-laptop.jpg' %})">
+  <div class="mask">
+    <h2>
+      <br>
+      Online Clinic System
+      <br>
+      Make Your Life Better, Easier
+    </h2>
+    <div class="auth">
+      <a href="/accounts/signup">Join Us Now</a>
+      <a href="/accounts/login">Already Have an account?</a>
+    </div>
+  </div>
+</div>
+
+<div class="inner">
+  <div class="banner_b" style="background-image: url({% static 'personal/img/explain.jpg' %})">
+  </div>
+</div>
+{% endblock %}

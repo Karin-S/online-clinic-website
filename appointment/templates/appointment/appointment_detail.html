@@ -1,0 +1,84 @@
+{% extends "personal/base.html" %}
+{% load staticfiles%}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block content %}
+{% if user.is_authenticated %}
+{% include 'base/js.html' %}
+<script>
+$(document).ready(function(){
+          function updateText(btn, newCount, verb){
+          btn.text(newCount + " " + verb)
+          btn.attr("data-likes", newCount)
+      }
+      $(".like-btn").click(function(e){
+        e.preventDefault()
+        var this_ = $(this)
+        var likeUrl = this_.attr("data-href")
+        var likeCount = parseInt(this_.attr("data-likes")) | 0
+        var addLike = likeCount + 1
+        var removeLike = likeCount - 1
+        if (likeUrl){
+           $.ajax({
+            url: likeUrl,
+            method: "GET",
+            data: {},
+            success: function(data){
+              console.log(data)
+              var newLikes;
+              if (data.liked){
+                  updateText(this_, addLike, "Unlike")
+              } else {
+                  updateText(this_, removeLike, "Like")
+                  // remove one like
+              }
+            }, error: function(error){
+              console.log(error)
+              console.log("error")
+            }
+          })
+        }
+      })
+  })
+</script>
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'personal/css/app.css' %}" type = "text/css"/>
+{% endblock %}
+
+<center>
+  <div class="info">
+
+    <h3>Username: {{ object.username }}</h3>
+    <p>Firstname: {{ object.first_name }}</p>
+    <p>Lastname: {{ object.last_name }}</p>
+    <p>Email: {{ object.email }}</p>
+    <p>Gender: {{ object.profile_user.gender }}</p>
+    <p>User Type: {{ object.profile_user.types }} </p>
+    <p>Click to Like or Unlike this doctor: <a class='like-btn' data-href='{{ object.profile_user.get_api_like_url }}'
+      data-likes='{{ object.profile_user.likes.count }}'
+      href='{{ object.profile_user.get_like_url }}'>{{ object.profile_user.likes.count }} Like</a></p>
+    <a href="{% url 'appointment:make_appointment' %}"> I wish to apply appointment to this doctor</a>
+    <br>
+    <br>
+    <a href="{% url 'appointment:Appointment_ListView' %}">Go back</a>
+  </div>
+</center>
+{% else %}
+<center>
+<p>Sorry, You do not have rights to do that.</p>
+</center>
+{% endif %}
+<script>
+$(document).ready(function(){
+   {% block jquery %}{% endblock %}
+ })
+</script>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

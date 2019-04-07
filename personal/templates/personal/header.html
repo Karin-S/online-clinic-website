@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load staticfiles%}
+<html lang="en">
+
+
+  <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <link rel="stylesheet" href="{% static 'personal/css/bootstrap.min.css' %}" />
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="/home">Home<span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link active" href="/accounts/dashboard">Dashboard</a>
+      {% if user.is_authenticated %}
+      <a class="nav-item nav-link active" href="{% url 'user:profiledetail' user.id %}">Profile</a>
+      {% else %}
+      <a class="nav-item nav-link active" href="/accounts/profile">Profile</a>
+      {% endif %}
+      {% if user.is_authenticated %}
+      <a class="nav-item nav-link active" href="/forum">Forum</a>
+      {% else %}
+      <a class="nav-item nav-link active" href="/accounts/profile">Forum</a>
+      {% endif %}
+      <a class="nav-item nav-link active" href="/appointment">My Appointment</a>
+    </div>
+  </div>
+</nav>
+  </nav>
+
+
+
+<head>
+	<title>Online Clinic System</title>
+	<meta charset="utf-8" />
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'personal/css/bootstrap.min.css' %}" type = "text/css"/>
+	<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+
+	<style type="text/css">
+		html,
+		body {
+		  height:100%
+		}
+	</style>
+</head>
+<br>
+<br>
+
+{% block content %}
+{% endblock %}
+<br>
+<footer>
+  <link rel="stylesheet" href="{% static 'personal/css/evenly.css' %}" />
+  <center><p>Contact email: <a href="https://mail.google.com">
+  geraltwu@gmail.com</a>.</p></center>
+</footer>
+</html>
